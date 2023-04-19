@@ -18,7 +18,7 @@ const FetchData = ({ company }: Props) => {
           ))}
         </div>
       ) : (
-        <h2>search...</h2>
+        <h2>searching...</h2>
       )}
     </>
   );

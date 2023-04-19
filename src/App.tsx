@@ -96,7 +96,7 @@ function App() {
         <HStack spacing={5} paddingLeft={2} marginBottom={50} padding={5}>
           <DropDown
             search={search}
-            company={company}
+            company={users}
             onChange={handleSearchChange}
           />
         </HStack>

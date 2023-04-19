@@ -1,4 +1,13 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 import React, { ChangeEvent, useState } from "react";
 
 import { BsChevronDown } from "react-icons/bs";
@@ -12,23 +21,14 @@ interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 const DropDown = ({ company, search, onChange }: Props) => {
-  const [searchText, setSearchText] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-
-  const handleOptionClick = () => {
-    // Mostrar el Popup cuando se haga clic en una opción del dropdown
-    setShowPopup(true);
-  };
-
   return (
     <>
       <div style={{ position: "relative" }}>
-        <input
+        <Input
+          placeholder="Buscar por nombre"
           type="text"
           value={search}
           onChange={(e) => onChange(e)}
-          placeholder="Buscar por nombre"
         />
         <div
           style={{
@@ -40,15 +40,18 @@ const DropDown = ({ company, search, onChange }: Props) => {
             width: "100%",
           }}
         >
-          {company && company.length ? (
+          {search && company.length ? (
             <div>
-              {company?.map((employee) => (
-                <Information key={employee.id} employee={employee} />
-              ))}
+              {company?.map((employee) => {
+                return (
+                  <Text key={employee.id} fontSize="xl">
+                    {" "}
+                    {employee.nombre}
+                  </Text>
+                );
+              })}
             </div>
-          ) : (
-            <h2>Buscando...</h2>
-          )}
+          ) : null}
         </div>
       </div>
     </>
