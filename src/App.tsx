@@ -24,6 +24,7 @@ function App() {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState<NewEmployeeType[]>([]);
+  const [usersfilter, setUsersfilter] = useState<NewEmployeeType[]>([]);
 
   // Manejar cambios en el input de búsqueda
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +34,24 @@ function App() {
   };
 
   const filter = (searchTerm: string) => {
+    if (searchTerm === "") {
+      setUsersfilter(company);
+    } else {
+      let resultsSearch = company.filter((element) => {
+        if (
+          element.nombre
+            ?.toString()
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        ) {
+          return element;
+        }
+      });
+      setUsers(resultsSearch);
+    }
+  };
+
+  const filter_grid = (searchTerm: string) => {
     let resultsSearch = company.filter((element) => {
       if (
         element.nombre
@@ -43,8 +62,8 @@ function App() {
         return element;
       }
     });
-
-    setUsers(resultsSearch);
+    setSearch(searchTerm);
+    setUsersfilter(resultsSearch);
   };
 
   useEffect(
@@ -69,11 +88,20 @@ function App() {
               };
             })
           );
+
+          setUsersfilter(
+            snapshot.docs.map((doc) => {
+              return {
+                id: doc.id,
+                ...doc.data(),
+              };
+            })
+          );
         }
       ),
     []
   );
-
+  console.log(company);
   return (
     <Grid
       templateAreas={{
@@ -82,7 +110,7 @@ function App() {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px 1fr",
+        lg: "100px 1fr",
       }}
     >
       <GridItem area="nav">
@@ -98,11 +126,12 @@ function App() {
             search={search}
             company={users}
             onChange={handleSearchChange}
+            onClick={(e) => filter_grid(e)}
           />
         </HStack>
 
         <HStack paddingLeft={5}>
-          <FetchData company={users} />
+          <FetchData company={usersfilter} />
         </HStack>
       </GridItem>
     </Grid>

@@ -1,13 +1,4 @@
-import {
-  Button,
-  Heading,
-  Input,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-} from "@chakra-ui/react";
+import { Input, Text } from "@chakra-ui/react";
 import React, { ChangeEvent, useState } from "react";
 
 import { BsChevronDown } from "react-icons/bs";
@@ -19,8 +10,10 @@ interface Props {
   company: NewEmployeeType[];
   search: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClick: (name: string) => void;
 }
-const DropDown = ({ company, search, onChange }: Props) => {
+
+const DropDown = ({ company, search, onChange, onClick }: Props) => {
   return (
     <>
       <div style={{ position: "relative" }}>
@@ -34,7 +27,7 @@ const DropDown = ({ company, search, onChange }: Props) => {
           style={{
             position: "absolute",
             background: "#fff",
-            top: 24,
+            top: 40,
             left: 0,
             boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
             width: "100%",
@@ -44,7 +37,13 @@ const DropDown = ({ company, search, onChange }: Props) => {
             <div>
               {company?.map((employee) => {
                 return (
-                  <Text key={employee.id} fontSize="xl">
+                  <Text
+                    key={employee.id}
+                    fontSize="xl"
+                    onClick={() => {
+                      onClick(employee.nombre!);
+                    }}
+                  >
                     {" "}
                     {employee.nombre}
                   </Text>

@@ -12,11 +12,7 @@ const FetchData = ({ company }: Props) => {
   return (
     <>
       {company && company.length ? (
-        <div>
-          {company?.map((employee) => (
-            <Information key={employee.id} employee={employee} />
-          ))}
-        </div>
+        <Information company={company} />
       ) : (
         <h2>searching...</h2>
       )}
