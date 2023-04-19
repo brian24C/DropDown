@@ -1,10 +1,9 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
 import { Button, ButtonGroup } from "@chakra-ui/react";
+import Prueba from "./components/fetch_data";
 
 function App() {
-  return <Button colorScheme="blue">Button</Button>;
+  return <Prueba />;
 }
 
 export default App;
