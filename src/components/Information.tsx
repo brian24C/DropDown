@@ -6,7 +6,6 @@ interface Props {
 }
 
 const Information = ({ employee }: Props) => {
-  console.log(employee);
   return <div>{employee.nombre}</div>;
 };
 

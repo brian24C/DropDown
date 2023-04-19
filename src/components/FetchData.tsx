@@ -4,27 +4,11 @@ import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
 import { NewEmployeeType } from "../types/employee";
 import Information from "./Information";
 
-const FetchData = () => {
-  const [company, setCompany] = useState<NewEmployeeType[]>([]);
+interface Props {
+  company: NewEmployeeType[];
+}
 
-  useEffect(
-    () =>
-      onSnapshot(
-        empresa_colecction,
-        (snapshot: QuerySnapshot<DocumentData>) => {
-          setCompany(
-            snapshot.docs.map((doc) => {
-              return {
-                id: doc.id,
-                ...doc.data(),
-              };
-            })
-          );
-        }
-      ),
-    []
-  );
-
+const FetchData = ({ company }: Props) => {
   return (
     <>
       {company && company.length ? (
@@ -34,7 +18,7 @@ const FetchData = () => {
           ))}
         </div>
       ) : (
-        <h2>No hay</h2>
+        <h2>search...</h2>
       )}
     </>
   );
