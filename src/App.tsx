@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
-import Prueba from "./components/fetch_data";
+import FetchData from "./components/FetchData";
 
 function App() {
-  return <Prueba />;
+  return <FetchData />;
 }
 
 export default App;

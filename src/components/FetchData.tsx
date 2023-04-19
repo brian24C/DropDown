@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { empresa_colecction } from "../lb/controller";
 import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
-import { NewEmployeeType } from "../types/empleados";
+import { NewEmployeeType } from "../types/employee";
+import Information from "./Information";
 
-const Prueba = () => {
-  const [empleados, setEmpleados] = useState<NewEmployeeType[]>([]);
+const FetchData = () => {
+  const [company, setCompany] = useState<NewEmployeeType[]>([]);
 
   useEffect(
     () =>
       onSnapshot(
         empresa_colecction,
         (snapshot: QuerySnapshot<DocumentData>) => {
-          setEmpleados(
+          setCompany(
             snapshot.docs.map((doc) => {
               return {
                 id: doc.id,
@@ -24,8 +25,19 @@ const Prueba = () => {
     []
   );
 
-  console.log(empleados, "hotels");
-  return <div>prueba</div>;
+  return (
+    <>
+      {company && company.length ? (
+        <div>
+          {company?.map((employee) => (
+            <Information key={employee.id} employee={employee} />
+          ))}
+        </div>
+      ) : (
+        <h2>No hay</h2>
+      )}
+    </>
+  );
 };
 
-export default Prueba;
+export default FetchData;
