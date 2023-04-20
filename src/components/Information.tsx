@@ -35,7 +35,7 @@ const Information = ({ company }: Props) => {
           {company?.map((employee) => (
             <Tr key={employee.id}>
               <Td>{employee.nombre}</Td>
-              <Td>{employee.razon_social} (mm)</Td>
+              <Td>{employee.razon_social}</Td>
               <Td isNumeric>{employee.codigo}</Td>
               <Td isNumeric>{employee.telefono}</Td>
               <Td isNumeric>{employee.nit}</Td>

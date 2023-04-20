@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Modal,
@@ -12,47 +13,92 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { SaveEmployee } from "../lb/controller";
+import { generarIdAleatorio } from "../helps/setId";
 
-const PopUp = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface Props {
+  isOpen: boolean;
+  setIsOpen: (bo: boolean) => void;
+}
 
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+const PopUp = ({ isOpen, setIsOpen }: Props) => {
+  const [person, setPerson] = useState({
+    codigo: "",
+    id: "",
+    nit: "",
+    nombre: "",
+    razon_social: "",
+    telefono: "",
+  });
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    SaveEmployee({ ...person, id: generarIdAleatorio(8) });
+    alert("submitedd");
+    setIsOpen(false);
+  };
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      {/* <Button onClick={onOpen}>Add employee</Button> */}
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>
+              <ModalCloseButton />
+            </ModalHeader>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input ref={initialRef} placeholder="First name" />
-            </FormControl>
+            <ModalBody>
+              <form id="new-form" onSubmit={handleSubmit}>
+                <FormControl>
+                  <FormLabel>Nombre</FormLabel>
+                  <Input
+                    onChange={(event) =>
+                      setPerson({ ...person, nombre: event.target.value })
+                    }
+                  />
 
-            <FormControl mt={4}>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder="Last name" />
-            </FormControl>
-          </ModalBody>
+                  <FormLabel>Razon Social</FormLabel>
+                  <Input
+                    onChange={(event) =>
+                      setPerson({ ...person, razon_social: event.target.value })
+                    }
+                  />
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
+                  <FormLabel>Telefono</FormLabel>
+                  <Input
+                    type="number"
+                    onChange={(event) =>
+                      setPerson({ ...person, telefono: event.target.value })
+                    }
+                  />
+
+                  <FormLabel>NIT</FormLabel>
+                  <Input
+                    type="number"
+                    onChange={(event) =>
+                      setPerson({ ...person, nit: event.target.value })
+                    }
+                  />
+
+                  <FormLabel>Codigo</FormLabel>
+                  <Input
+                    type="number"
+                    onChange={(event) =>
+                      setPerson({ ...person, codigo: event.target.value })
+                    }
+                  />
+                </FormControl>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button type="submit" form="new-form">
+                Submit
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </ModalOverlay>
       </Modal>
     </>
   );

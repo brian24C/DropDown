@@ -10,15 +10,10 @@ import {
 import FetchData from "./components/FetchData";
 import NavBar from "./components/Navbar";
 import DropDown from "./components/DropDown";
-import { NewEmployeeType } from "./types/employee";
-import {
-  DocumentData,
-  QuerySnapshot,
-  onSnapshot,
-  where,
-  query,
-} from "firebase/firestore";
-import { empresa_colecction } from "./lb/controller";
+import { NewEmployeeType, typesearch } from "./types/employee";
+import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
+import { empresa_colecction, getEmployee } from "./lb/controller";
+import InfiniteScrollC from "./components/infiniteScroll/InfiniteScrollC";
 
 function App() {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
@@ -30,7 +25,6 @@ function App() {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     filter(e.target.value);
-    console.log(e.target.value);
   };
 
   const filter = (searchTerm: string) => {
@@ -51,10 +45,10 @@ function App() {
     }
   };
 
-  const filter_grid = (searchTerm: string) => {
+  const filter_grid = (searchTerm: string, filter: typesearch) => {
     let resultsSearch = company.filter((element) => {
       if (
-        element.nombre
+        element[filter]
           ?.toString()
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
@@ -62,7 +56,7 @@ function App() {
         return element;
       }
     });
-    setSearch(searchTerm);
+    setSearch("");
     setUsersfilter(resultsSearch);
   };
 
@@ -101,7 +95,13 @@ function App() {
       ),
     []
   );
-  console.log(company);
+
+  // const getEmployeesData = async () => {
+  //   const { docs } = await getEmployee(4);
+  //   const allObject = docs.map((doc) => doc.data());
+  //   console.log(allObject[allObject.length - 1]);
+  // };
+
   return (
     <Grid
       templateAreas={{
@@ -126,13 +126,19 @@ function App() {
             search={search}
             company={users}
             onChange={handleSearchChange}
-            onClick={(e) => filter_grid(e)}
+            onClick={(e) => filter_grid(e, typesearch.nombre)}
+            onIconClick={(e) => filter_grid(e, typesearch.nombre)}
           />
         </HStack>
 
         <HStack paddingLeft={5}>
           <FetchData company={usersfilter} />
         </HStack>
+        <InfiniteScrollC
+          company={company}
+          onClick={(e) => filter_grid(e, typesearch.nombre)}
+        />
+        <div></div>
       </GridItem>
     </Grid>
   );
