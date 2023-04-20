@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./InfiniteScrollC.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NewEmployeeType } from "../../types/employee";
-import { HStack, Input, Text, useDisclosure } from "@chakra-ui/react";
-import { getEmployee, getEmployee2, getEmployee3 } from "../../lb/controller";
+import { Text } from "@chakra-ui/react";
+import { getEmployee2, getEmployee3 } from "../../lb/controller";
 interface Props {
   company: NewEmployeeType[];
   onClick: (name: string) => void;
