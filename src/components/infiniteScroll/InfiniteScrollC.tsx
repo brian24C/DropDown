@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./infiniteScroll.css";
+import "./InfiniteScrollC.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NewEmployeeType } from "../../types/employee";
 import { HStack, Input, Text, useDisclosure } from "@chakra-ui/react";
@@ -20,7 +20,7 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
 
   const getEmployeesData = async (paginacion: any) => {
     const { docs } = await getEmployee3(paginacion.last);
-    const data_total = await getEmployee2(paginacion.last);
+    const data_total = await getEmployee2();
     console.log(docs);
     const allObject = docs.map((doc) => doc.data());
     const data_total_object = data_total.docs.map((doc) => doc.data());

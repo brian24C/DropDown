@@ -10,13 +10,7 @@ interface Props {
 
 const FetchData = ({ company }: Props) => {
   return (
-    <>
-      {company && company.length ? (
-        <Information company={company} />
-      ) : (
-        <h2>searching...</h2>
-      )}
-    </>
+    <>{company && company.length ? <Information company={company} /> : null}</>
   );
 };
 
