@@ -3,7 +3,7 @@ import "./infiniteScroll.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NewEmployeeType } from "../../types/employee";
 import { HStack, Input, Text, useDisclosure } from "@chakra-ui/react";
-import { getEmployee, getEmployee2 } from "../../lb/controller";
+import { getEmployee, getEmployee3 } from "../../lb/controller";
 interface Props {
   company: NewEmployeeType[];
   onClick: (name: string) => void;
@@ -13,35 +13,37 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
   const [paginacion, setPaginacion] = useState({
     first: 0,
-    last: 4,
+    last: 20,
   });
+  const [hasMore, setHasMore] = useState(true);
 
   const getEmployeesData = async (paginacion: any) => {
-    const { docs } = await getEmployee2(paginacion.last);
+    const { docs } = await getEmployee3(paginacion.last);
     console.log(docs);
     const allObject = docs.map((doc) => doc.data());
+    console.log(allObject);
     const firstDoc = allObject.length;
-    const lastDoc = allObject.length + 4;
+    const lastDoc = allObject.length + 20;
     setPaginacion({ first: firstDoc, last: lastDoc });
+
     console.log({ firs: firstDoc, last: lastDoc });
-    setUsers((p) => allObject.concat(p));
+    //setUsers((u) => allObject.concat(u));
+    setUsers(allObject);
+    setHasMore(firstDoc < company.length);
+    console.log(firstDoc < company.length);
   };
-  console.log({
-    afuera: "afuera",
-    firs: paginacion.first,
-    last: paginacion.last,
-  });
+
   useEffect(() => {
     getEmployeesData(paginacion);
   }, []);
 
   return (
     <div className="infinite-scroll-container" id="infiniteScroll">
-      {users.length != 0 ? (
+      {paginacion !== null ? (
         <InfiniteScroll
           dataLength={users.length}
           next={() => {
-            getEmployeesData({ ...paginacion });
+            getEmployeesData(paginacion.last);
           }}
           hasMore={true}
           endMessage={
@@ -52,23 +54,21 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
           loader={<h4> Loading ...</h4>}
           scrollableTarget="infiniteScroll"
         >
-          <ul>
-            {users?.map((employee) => {
-              return (
-                <Text
-                  key={employee.id}
-                  fontSize="xl"
-                  onClick={() => {
-                    onClick(employee.nombre!);
-                  }}
-                  cursor="pointer"
-                >
-                  {" "}
-                  {employee.nombre}
-                </Text>
-              );
-            })}
-          </ul>
+          {users?.map((employee) => {
+            return (
+              <Text
+                key={employee.id}
+                fontSize="xl"
+                onClick={() => {
+                  onClick(employee.nombre!);
+                }}
+                cursor="pointer"
+              >
+                {" "}
+                {employee.nombre}
+              </Text>
+            );
+          })}
         </InfiniteScroll>
       ) : (
         ""

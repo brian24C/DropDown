@@ -65,9 +65,8 @@ const DropDown = ({
                   {"add employee +"}
                 </Text>
               </div>
-              <div>
-                <InfiniteScrollC company={company} onClick={onClick} />
-              </div>
+
+              <InfiniteScrollC company={company} onClick={onClick} />
             </div>
           ) : null}
         </div>

@@ -23,21 +23,29 @@ export const SaveEmployee = (employee: NewEmployeeType) => {
   addDoc(collection(fireStore, "empresa_bd"), { ...employee });
 };
 
-export const getEmployee = async (num: number, lastDoc: {}) => {
+export const getEmployee = async (num: number, lastDoc: NewEmployeeType) => {
   const result = await getDocs(
     query(
       empresa_colecction,
       orderBy("nombre", "asc"),
-      limit(num),
-      startAfter(lastDoc)
+
+      startAfter(lastDoc.id),
+      limit(num)
     )
   );
+
   return result;
 };
 
 export const getEmployee2 = async (num: number) => {
+  const result = await getDocs(query(empresa_colecction, limit(num)));
+  return result;
+};
+
+export const getEmployee3 = async (num: number) => {
   const result = await getDocs(
     query(empresa_colecction, orderBy("nombre", "asc"), limit(num))
   );
+
   return result;
 };
