@@ -2,7 +2,20 @@ import React, { useEffect, useState } from "react";
 import "./infiniteScroll.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NewEmployeeType } from "../../types/employee";
-import { HStack, Input, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  HStack,
+  Input,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { getEmployee, getEmployee2, getEmployee3 } from "../../lb/controller";
 interface Props {
   company: NewEmployeeType[];
@@ -20,7 +33,7 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
 
   const getEmployeesData = async (paginacion: any) => {
     const { docs } = await getEmployee3(paginacion.last);
-    const data_total = await getEmployee2(paginacion.last);
+    const data_total = await getEmployee2();
     console.log(docs);
     const allObject = docs.map((doc) => doc.data());
     const data_total_object = data_total.docs.map((doc) => doc.data());
@@ -34,7 +47,6 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
     setHasMore(firstDoc < data_total_object.length);
     console.log(firstDoc < data_total_object.length);
   };
-  console.log(company);
 
   const getEmployeesData2 = (start: number, final: number) => {
     const resultado = company.slice(0, final);
@@ -67,21 +79,38 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
           loader={<h4> Loading ...</h4>}
           scrollableTarget="infiniteScroll"
         >
-          {users?.map((employee) => {
-            return (
-              <Text
-                key={employee.id}
-                fontSize="xl"
-                onClick={() => {
-                  onClick(employee.nombre!);
-                }}
-                cursor="pointer"
-              >
-                {" "}
-                {employee.nombre}
-              </Text>
-            );
-          })}
+          <TableContainer>
+            <Table variant="simple">
+              <TableCaption></TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>Nombre</Th>
+                  <Th>Razon Social</Th>
+                  <Th isNumeric>Codigo</Th>
+                  <Th isNumeric>telefono</Th>
+                  <Th isNumeric>NIT</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {users?.map((employee) => (
+                  <Tr key={employee.id}>
+                    <Td>{employee.nombre}</Td>
+                    <Td>{employee.razon_social}</Td>
+                    <Td isNumeric>{employee.codigo}</Td>
+                    <Td isNumeric>{employee.telefono}</Td>
+                    <Td isNumeric>{employee.nit}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+              {/* <Tfoot>
+          <Tr>
+            <Th>To convert</Th>
+            <Th>into</Th>
+            <Th isNumeric>multiply by</Th>
+          </Tr>
+        </Tfoot> */}
+            </Table>
+          </TableContainer>
         </InfiniteScroll>
       ) : (
         ""

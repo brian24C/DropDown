@@ -1,20 +1,10 @@
 
 
-/* .infinite-scroll-container{
+.infinite-scroll-container{
     margin: auto;
     margin-top: 5em;
     height: 35em;
     width: 50em;
     overflow: auto;
-} */
+} 
 
-.infinite-scroll-container {
-    margin: auto;
-    margin-top: 1em;
-    height: 35em;
-    width: 50em;
-    overflow: auto;
-    /* Modifica los valores de margin para ajustar el espaciado del scroll */
-    margin-right: 0.5em; /* Reduce el espacio a la derecha */
-    margin-bottom: 0.5em; /* Reduce el espacio inferior */
-}

@@ -18,10 +18,11 @@ interface Props {
 }
 
 const Information = ({ company }: Props) => {
+  console.log({ "infomration:": company });
   return (
     <TableContainer>
       <Table variant="simple">
-        <TableCaption>Si se puede!</TableCaption>
+        <TableCaption></TableCaption>
         <Thead>
           <Tr>
             <Th>Nombre</Th>

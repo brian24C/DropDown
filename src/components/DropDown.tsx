@@ -66,7 +66,23 @@ const DropDown = ({
                 </Text>
               </div>
 
-              <InfiniteScrollC company={company} onClick={onClick} />
+              <div>
+                {company?.map((employee) => {
+                  return (
+                    <Text
+                      key={employee.id}
+                      fontSize="xl"
+                      onClick={() => {
+                        onClick(employee.nombre!);
+                      }}
+                      cursor="pointer"
+                    >
+                      {" "}
+                      {employee.nombre}
+                    </Text>
+                  );
+                })}
+              </div>
             </div>
           ) : null}
         </div>

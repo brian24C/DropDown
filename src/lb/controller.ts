@@ -37,15 +37,15 @@ export const getEmployee = async (num: number, lastDoc: NewEmployeeType) => {
   return result;
 };
 
-export const getEmployee2 = async (num: number) => {
-  const result = await getDocs(query(empresa_colecction, limit(num)));
+export const getEmployee2 = async () => {
+  const result = await getDocs(
+    query(empresa_colecction, orderBy("nombre", "asc"))
+  );
   return result;
 };
 
 export const getEmployee3 = async (num: number) => {
-  const result = await getDocs(
-    query(empresa_colecction, orderBy("nombre", "asc"), limit(num))
-  );
+  const result = await getDocs(query(empresa_colecction, limit(num)));
 
   return result;
 };

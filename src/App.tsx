@@ -14,12 +14,15 @@ import { NewEmployeeType, typesearch } from "./types/employee";
 import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
 import { empresa_colecction, getEmployee } from "./lb/controller";
 import InfiniteScrollC from "./components/infiniteScroll/InfiniteScrollC";
-
+import InfiniteScrollCcopy from "./components/infiniteScroll/InfiniteScrollTable";
+import InfiniteScrollTable from "./components/infiniteScroll/InfiniteScrollTable";
+import { Text } from "@chakra-ui/react";
 function App() {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState<NewEmployeeType[]>([]);
   const [usersfilter, setUsersfilter] = useState<NewEmployeeType[]>([]);
+  //const [clickSearch, setClickSearch] = useState(false);
 
   // Manejar cambios en el input de búsqueda
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +33,7 @@ function App() {
   const filter = (searchTerm: string) => {
     if (searchTerm === "") {
       setUsersfilter(company);
+      //setClickSearch(false);
     } else {
       let resultsSearch = company.filter((element) => {
         if (
@@ -58,6 +62,7 @@ function App() {
     });
     setSearch("");
     setUsersfilter(resultsSearch);
+    //setClickSearch(!clickSearch);
   };
 
   useEffect(
@@ -121,7 +126,7 @@ function App() {
       </Show>{" "} */}
 
       <GridItem area="main" padding={10}>
-        <HStack spacing={5} paddingLeft={2} marginBottom={50} padding={5}>
+        <HStack spacing={5} paddingLeft={2} marginBottom={30} padding={5}>
           <DropDown
             search={search}
             company={users}
@@ -134,7 +139,14 @@ function App() {
         <HStack paddingLeft={5}>
           <FetchData company={usersfilter} />
         </HStack>
-        <InfiniteScrollC
+        {/* <InfiniteScrollC
+          company={company}
+          onClick={(e) => filter_grid(e, typesearch.nombre)}
+        /> */}
+        <div style={{ textAlign: "center" }}>
+          <Text fontSize="5xl">Infinite Scroll</Text>
+        </div>
+        <InfiniteScrollTable
           company={company}
           onClick={(e) => filter_grid(e, typesearch.nombre)}
         />
