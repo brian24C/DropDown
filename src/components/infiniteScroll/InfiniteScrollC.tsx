@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "./InfiniteScrollC.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NewEmployeeType } from "../../types/employee";
-import { Text } from "@chakra-ui/react";
-import { getEmployee2, getEmployee3 } from "../../lb/controller";
+import { Spinner, Text } from "@chakra-ui/react";
+
 interface Props {
   company: NewEmployeeType[];
   onClick: (name: string) => void;
@@ -11,13 +11,7 @@ interface Props {
 
 const InfiniteScrollC = ({ company, onClick }: Props) => {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
-  // const [paginacion, setPaginacion] = useState({
-  //   first: 0,
-  //   last: 20,
-  // });
   const [paginacion, setPaginacion] = useState(20);
-
-  const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
 
   const getEmployeesData2 = () => {
@@ -46,7 +40,7 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
               <b>Yay! You have seen it all</b>
             </p>
           }
-          loader={<h4> Loading ...</h4>}
+          loader={<Spinner color="red.500" />}
           scrollableTarget="infiniteScroll"
         >
           {users?.map((employee) => {

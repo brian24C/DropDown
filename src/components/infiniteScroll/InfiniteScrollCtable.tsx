@@ -14,60 +14,46 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { getEmployee2, getEmployee3 } from "../../lb/controller";
+import TableSkeleton from "../TableSkeleton";
 interface Props {
   company: NewEmployeeType[];
   onClick: (name: string) => void;
 }
 
-const InfiniteScrollC = ({ company, onClick }: Props) => {
+const InfiniteScrollCtablePrueba = ({ company, onClick }: Props) => {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
-  const [paginacion, setPaginacion] = useState({
-    first: 0,
-    last: 20,
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  // const [paginacion, setPaginacion] = useState({
+  //   first: 0,
+  //   last: 20,
+  // });
+  const [paginacion, setPaginacion] = useState(20);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
 
-  const getEmployeesData = async (paginacion: any) => {
-    const { docs } = await getEmployee3(paginacion.last);
-    const data_total = await getEmployee2();
-
-    const allObject = docs.map((doc) => doc.data());
-    const data_total_object = data_total.docs.map((doc) => doc.data());
-
-    const firstDoc = allObject.length;
-    const lastDoc = allObject.length + 20;
-    setPaginacion({ first: firstDoc, last: lastDoc });
-
-    setUsers(allObject);
-    setHasMore(firstDoc < data_total_object.length);
-
+  const getEmployeesData2 = () => {
+    const resultado = company.slice(0, paginacion);
+    setUsers(resultado);
+    console.log(company);
+    setHasMore(paginacion < company.length);
     setIsLoading(false);
   };
 
-  const getEmployeesData2 = (start: number, final: number) => {
-    const resultado = company.slice(0, final);
-
-    const firstDoc = final;
-    const lastDoc = final + 20;
-
-    setPaginacion({ first: firstDoc, last: lastDoc });
-    setUsers(resultado);
-  };
   useEffect(() => {
     setIsLoading(true);
-    getEmployeesData(paginacion);
-  }, []);
+    getEmployeesData2();
+  }, [paginacion, company]);
+
+  if (users.length === 0) return <TableSkeleton></TableSkeleton>;
 
   return (
-    <div className="infinite-scroll-container" id="infiniteScroll">
+    <div className="infinite-scroll-container-table" id="infiniteScroll">
       {paginacion !== null ? (
         <InfiniteScroll
           dataLength={users.length}
           next={() => {
-            //getEmployeesData2(paginacion.first, paginacion.last);
-            getEmployeesData(paginacion.last);
+            setPaginacion(paginacion + 20);
+            //getEmployeesData(paginacion.last);
           }}
           hasMore={hasMore}
           endMessage={
@@ -118,4 +104,4 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
   );
 };
 
-export default InfiniteScrollC;
+export default InfiniteScrollCtablePrueba;

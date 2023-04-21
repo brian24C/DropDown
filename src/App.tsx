@@ -1,15 +1,12 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { Grid, GridItem, HStack } from "@chakra-ui/react";
-import FetchData from "./components/FetchData";
+import { ChangeEvent, useState } from "react";
+import { Box, Grid, GridItem, HStack } from "@chakra-ui/react";
 import NavBar from "./components/Navbar";
 import DropDown from "./components/DropDown";
 import { NewEmployeeType, typesearch } from "./types/employee";
-import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
-import { empresa_colecction } from "./lb/controller";
-import InfiniteScrollTable from "./components/infiniteScroll/InfiniteScrollTable";
 import { Text } from "@chakra-ui/react";
 import useGetEmployee from "./hooks/useGetEmployee";
-import InfiniteScrollCtablePrueba from "./components/infiniteScroll/InfiniteScrollTablePruebaa";
+import InfiniteScrollCtablePrueba from "./components/infiniteScroll/InfiniteScrollCtable";
+import InfiniteScrollCtable from "./components/infiniteScroll/InfiniteScrollCtable";
 
 function App() {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
@@ -82,38 +79,30 @@ function App() {
       </Show>{" "} */}
 
       <GridItem area="main" padding={10}>
-        <HStack spacing={5} paddingLeft={2} marginBottom={30} padding={5}>
-          <DropDown
-            search={search}
-            company={users}
-            onChange={handleSearchChange}
-            onClick={(e) => filter_grid(e, typesearch.nombre)}
-            onIconClick={(e) => filter_grid(e, typesearch.nombre)}
-          />
-        </HStack>
+        <Box justifyContent="center">
+          <HStack spacing={5} paddingLeft={2} marginBottom={30} padding={5}>
+            <DropDown
+              search={search}
+              company={users}
+              onChange={handleSearchChange}
+              onClick={(e) => filter_grid(e, typesearch.nombre)}
+              onIconClick={(e) => filter_grid(e, typesearch.nombre)}
+            />
+          </HStack>
 
-        <HStack paddingLeft={5}>
-          {/* <FetchData company={usersfilter} /> */}
-        </HStack>
-        {/* <InfiniteScrollC
-          company={company}
-          onClick={(e) => filter_grid(e, typesearch.nombre)}
-        /> */}
-        <div style={{ textAlign: "center" }}>
-          <Text fontSize="5xl">Infinite Scroll</Text>
-        </div>
+          <HStack paddingLeft={5}>
+            <div style={{ textAlign: "center" }}>
+              <Text fontSize="5xl">Infinite Scroll</Text>
 
-        <div>
-          {/* <InfiniteScrollTable
-            company={company}
-            onClick={(e) => filter_grid(e, typesearch.nombre)}
-          /> */}
-
-          <InfiniteScrollCtablePrueba
-            company={usersfilter}
-            onClick={(e) => filter_grid(e, typesearch.nombre)}
-          />
-        </div>
+              <div>
+                <InfiniteScrollCtable
+                  company={usersfilter}
+                  onClick={(e) => filter_grid(e, typesearch.nombre)}
+                />
+              </div>
+            </div>
+          </HStack>
+        </Box>
       </GridItem>
     </Grid>
   );
