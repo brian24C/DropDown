@@ -26,41 +26,36 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
 
   return (
     <div className="infinite-scroll-container" id="infiniteScroll">
-      {paginacion !== null ? (
-        <InfiniteScroll
-          dataLength={users.length}
-          next={() => {
-            //getEmployeesData2(paginacion.first, paginacion.last);
-            setPaginacion(paginacion + 20);
-          }}
-          hasMore={hasMore}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-          loader={<Spinner color="red.500" />}
-          scrollableTarget="infiniteScroll"
-        >
-          {users?.map((employee) => {
-            return (
-              <Text
-                key={employee.id}
-                fontSize="xl"
-                onClick={() => {
-                  onClick(employee.nombre!);
-                }}
-                cursor="pointer"
-              >
-                {" "}
-                {employee.nombre}
-              </Text>
-            );
-          })}
-        </InfiniteScroll>
-      ) : (
-        ""
-      )}
+      <InfiniteScroll
+        dataLength={users.length}
+        next={() => {
+          setPaginacion(paginacion + 20);
+        }}
+        hasMore={hasMore}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+        loader={<Spinner color="red.500" />}
+        scrollableTarget="infiniteScroll"
+      >
+        {users?.map((employee) => {
+          return (
+            <Text
+              key={employee.id}
+              fontSize="xl"
+              onClick={() => {
+                onClick(employee.nombre!);
+              }}
+              cursor="pointer"
+            >
+              {" "}
+              {employee.nombre}
+            </Text>
+          );
+        })}
+      </InfiniteScroll>
     </div>
   );
 };

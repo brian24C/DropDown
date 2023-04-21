@@ -12,6 +12,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState<NewEmployeeType[]>([]);
   const [usersfilter, setUsersfilter] = useState<NewEmployeeType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -52,7 +53,7 @@ function App() {
     setUsersfilter(resultsSearch);
   };
 
-  useGetEmployee({ setCompany, setUsers, setUsersfilter });
+  useGetEmployee({ setCompany, setUsers, setUsersfilter, setIsLoading });
 
   return (
     <Grid
@@ -90,6 +91,7 @@ function App() {
                   company={usersfilter}
                   onClick={(e) => filter_grid(e, typesearch.nombre)}
                   search={search}
+                  isLoading={isLoading}
                 />
               </div>
             </div>

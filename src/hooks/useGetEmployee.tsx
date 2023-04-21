@@ -7,9 +7,15 @@ interface Props {
   setCompany: (company: NewEmployeeType[]) => void;
   setUsers: (users: NewEmployeeType[]) => void;
   setUsersfilter: (usersFilter: NewEmployeeType[]) => void;
+  setIsLoading: (loadnig: boolean) => void;
 }
 
-const useGetEmployee = ({ setCompany, setUsers, setUsersfilter }: Props) => {
+const useGetEmployee = ({
+  setCompany,
+  setUsers,
+  setUsersfilter,
+  setIsLoading,
+}: Props) => {
   return useEffect(
     () =>
       onSnapshot(
@@ -41,6 +47,7 @@ const useGetEmployee = ({ setCompany, setUsers, setUsersfilter }: Props) => {
               };
             })
           );
+          setIsLoading(false);
         }
       ),
     []
