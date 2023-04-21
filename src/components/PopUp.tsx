@@ -39,7 +39,6 @@ const PopUp = ({ isOpen, setIsOpen }: Props) => {
 
   return (
     <>
-      {/* <Button onClick={onOpen}>Add employee</Button> */}
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay>
           <ModalContent>

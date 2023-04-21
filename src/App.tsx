@@ -5,7 +5,6 @@ import DropDown from "./components/DropDown";
 import { NewEmployeeType, typesearch } from "./types/employee";
 import { Text } from "@chakra-ui/react";
 import useGetEmployee from "./hooks/useGetEmployee";
-import InfiniteScrollCtablePrueba from "./components/infiniteScroll/InfiniteScrollCtable";
 import InfiniteScrollCtable from "./components/infiniteScroll/InfiniteScrollCtable";
 
 function App() {
@@ -14,9 +13,6 @@ function App() {
   const [company, setCompany] = useState<NewEmployeeType[]>([]);
   const [usersfilter, setUsersfilter] = useState<NewEmployeeType[]>([]);
 
-  //const [clickSearch, setClickSearch] = useState(false);
-
-  // Manejar cambios en el input de búsqueda
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     filter(e.target.value);
@@ -25,7 +21,6 @@ function App() {
   const filter = (searchTerm: string) => {
     if (searchTerm === "") {
       setUsersfilter(company);
-      //setClickSearch(false);
     } else {
       let resultsSearch = company.filter((element) => {
         if (
@@ -55,7 +50,6 @@ function App() {
     });
     setSearch("");
     setUsersfilter(resultsSearch);
-    //setClickSearch(!clickSearch);
   };
 
   useGetEmployee({ setCompany, setUsers, setUsersfilter });
@@ -74,9 +68,6 @@ function App() {
       <GridItem area="nav">
         <NavBar />
       </GridItem>
-      {/* <Show above="lg">
-        mostrar empleados por categoria
-      </Show>{" "} */}
 
       <GridItem area="main" padding={10}>
         <Box justifyContent="center">
@@ -98,6 +89,7 @@ function App() {
                 <InfiniteScrollCtable
                   company={usersfilter}
                   onClick={(e) => filter_grid(e, typesearch.nombre)}
+                  search={search}
                 />
               </div>
             </div>

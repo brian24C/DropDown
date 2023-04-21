@@ -1,6 +1,5 @@
-import React from "react";
 import { NewEmployeeType } from "../types/employee";
-import { Input, Text } from "@chakra-ui/react";
+
 import {
   Table,
   TableCaption,
@@ -41,18 +40,9 @@ const Information = ({ company }: Props) => {
             </Tr>
           ))}
         </Tbody>
-        {/* <Tfoot>
-          <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
-          </Tr>
-        </Tfoot> */}
       </Table>
     </TableContainer>
   );
 };
 
 export default Information;
-
-// return <div>{employee.nombre}</div>;

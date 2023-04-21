@@ -17,7 +17,6 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
   const getEmployeesData2 = () => {
     const resultado = company.slice(0, paginacion);
     setUsers(resultado);
-    console.log(company);
     setHasMore(paginacion < company.length);
   };
 

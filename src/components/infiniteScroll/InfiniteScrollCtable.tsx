@@ -18,9 +18,10 @@ import TableSkeleton from "../TableSkeleton";
 interface Props {
   company: NewEmployeeType[];
   onClick: (name: string) => void;
+  search: string;
 }
 
-const InfiniteScrollCtablePrueba = ({ company, onClick }: Props) => {
+const InfiniteScrollCtablePrueba = ({ company, onClick, search }: Props) => {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
   // const [paginacion, setPaginacion] = useState({
   //   first: 0,
@@ -34,7 +35,7 @@ const InfiniteScrollCtablePrueba = ({ company, onClick }: Props) => {
   const getEmployeesData2 = () => {
     const resultado = company.slice(0, paginacion);
     setUsers(resultado);
-    console.log(company);
+
     setHasMore(paginacion < company.length);
     setIsLoading(false);
   };
