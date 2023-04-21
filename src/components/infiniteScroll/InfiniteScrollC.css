@@ -1,7 +1,15 @@
 
 .infinite-scroll-container{
     margin: auto;
-    margin-top: 5em;
+    margin-top: 0em;
+    height: 10em;
+    width: 15em;
+    overflow: auto;
+} 
+
+.infinite-scroll-container-table{
+    margin: auto;
+    margin-top: 1em;
     height: 35em;
     width: 50em;
     overflow: auto;

@@ -7,7 +7,6 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
@@ -18,7 +17,6 @@ interface Props {
 }
 
 const Information = ({ company }: Props) => {
-  console.log({ "infomration:": company });
   return (
     <TableContainer>
       <Table variant="simple">

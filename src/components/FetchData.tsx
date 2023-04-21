@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { empresa_colecction } from "../lb/controller";
-import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
 import { NewEmployeeType } from "../types/employee";
 import Information from "./Information";
 

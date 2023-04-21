@@ -1,27 +1,22 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  Button,
-  ButtonGroup,
-  Grid,
-  GridItem,
-  HStack,
-  Show,
-} from "@chakra-ui/react";
+import { Grid, GridItem, HStack } from "@chakra-ui/react";
 import FetchData from "./components/FetchData";
 import NavBar from "./components/Navbar";
 import DropDown from "./components/DropDown";
 import { NewEmployeeType, typesearch } from "./types/employee";
 import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
-import { empresa_colecction, getEmployee } from "./lb/controller";
-import InfiniteScrollC from "./components/infiniteScroll/InfiniteScrollC";
-import InfiniteScrollCcopy from "./components/infiniteScroll/InfiniteScrollTable";
+import { empresa_colecction } from "./lb/controller";
 import InfiniteScrollTable from "./components/infiniteScroll/InfiniteScrollTable";
 import { Text } from "@chakra-ui/react";
+import useGetEmployee from "./hooks/useGetEmployee";
+import InfiniteScrollCtablePrueba from "./components/infiniteScroll/InfiniteScrollTablePruebaa";
+
 function App() {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState<NewEmployeeType[]>([]);
   const [usersfilter, setUsersfilter] = useState<NewEmployeeType[]>([]);
+
   //const [clickSearch, setClickSearch] = useState(false);
 
   // Manejar cambios en el input de búsqueda
@@ -46,6 +41,7 @@ function App() {
         }
       });
       setUsers(resultsSearch);
+      setUsersfilter(resultsSearch);
     }
   };
 
@@ -65,47 +61,7 @@ function App() {
     //setClickSearch(!clickSearch);
   };
 
-  useEffect(
-    () =>
-      onSnapshot(
-        empresa_colecction,
-        (snapshot: QuerySnapshot<DocumentData>) => {
-          setCompany(
-            snapshot.docs.map((doc) => {
-              return {
-                id: doc.id,
-                ...doc.data(),
-              };
-            })
-          );
-
-          setUsers(
-            snapshot.docs.map((doc) => {
-              return {
-                id: doc.id,
-                ...doc.data(),
-              };
-            })
-          );
-
-          setUsersfilter(
-            snapshot.docs.map((doc) => {
-              return {
-                id: doc.id,
-                ...doc.data(),
-              };
-            })
-          );
-        }
-      ),
-    []
-  );
-
-  // const getEmployeesData = async () => {
-  //   const { docs } = await getEmployee(4);
-  //   const allObject = docs.map((doc) => doc.data());
-  //   console.log(allObject[allObject.length - 1]);
-  // };
+  useGetEmployee({ setCompany, setUsers, setUsersfilter });
 
   return (
     <Grid
@@ -137,7 +93,7 @@ function App() {
         </HStack>
 
         <HStack paddingLeft={5}>
-          <FetchData company={usersfilter} />
+          {/* <FetchData company={usersfilter} /> */}
         </HStack>
         {/* <InfiniteScrollC
           company={company}
@@ -146,11 +102,18 @@ function App() {
         <div style={{ textAlign: "center" }}>
           <Text fontSize="5xl">Infinite Scroll</Text>
         </div>
-        <InfiniteScrollTable
-          company={company}
-          onClick={(e) => filter_grid(e, typesearch.nombre)}
-        />
-        <div></div>
+
+        <div>
+          {/* <InfiniteScrollTable
+            company={company}
+            onClick={(e) => filter_grid(e, typesearch.nombre)}
+          /> */}
+
+          <InfiniteScrollCtablePrueba
+            company={usersfilter}
+            onClick={(e) => filter_grid(e, typesearch.nombre)}
+          />
+        </div>
       </GridItem>
     </Grid>
   );

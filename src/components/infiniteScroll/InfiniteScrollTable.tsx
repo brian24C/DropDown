@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./InfiniteScrollC.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NewEmployeeType } from "../../types/employee";
 import {
-  HStack,
-  Input,
+  Spinner,
   Table,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
-  useDisclosure,
 } from "@chakra-ui/react";
-import { getEmployee, getEmployee2, getEmployee3 } from "../../lb/controller";
+import { getEmployee2, getEmployee3 } from "../../lb/controller";
 interface Props {
   company: NewEmployeeType[];
   onClick: (name: string) => void;
@@ -36,18 +33,17 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
     const { docs } = await getEmployee3(paginacion.last);
     const data_total = await getEmployee2();
 
-    console.log(docs);
     const allObject = docs.map((doc) => doc.data());
     const data_total_object = data_total.docs.map((doc) => doc.data());
-    console.log(allObject);
+
     const firstDoc = allObject.length;
     const lastDoc = allObject.length + 20;
     setPaginacion({ first: firstDoc, last: lastDoc });
 
-    console.log({ firs: firstDoc, last: lastDoc });
     setUsers(allObject);
     setHasMore(firstDoc < data_total_object.length);
-    console.log(firstDoc < data_total_object.length);
+
+    setIsLoading(false);
   };
 
   const getEmployeesData2 = (start: number, final: number) => {
@@ -60,6 +56,7 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
     setUsers(resultado);
   };
   useEffect(() => {
+    setIsLoading(true);
     getEmployeesData(paginacion);
   }, []);
 
@@ -78,7 +75,7 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
               <b>Yay! You have seen it all</b>
             </p>
           }
-          loader={<h4> Loading ...</h4>}
+          loader={<Spinner color="red.500" />}
           scrollableTarget="infiniteScroll"
         >
           <TableContainer>

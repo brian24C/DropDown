@@ -1,10 +1,8 @@
-import { HStack, Input, Text, useDisclosure } from "@chakra-ui/react";
-import React, { ChangeEvent, useState } from "react";
+import { Badge, HStack, Input, Text } from "@chakra-ui/react";
+import { ChangeEvent, useState } from "react";
 import { IconButton } from "@chakra-ui/react";
-import { BsChevronDown } from "react-icons/bs";
 import PopUp from "./PopUp";
 import { NewEmployeeType } from "../types/employee";
-import Information from "./Information";
 import { AiOutlineSearch } from "react-icons/ai";
 import InfiniteScrollC from "./infiniteScroll/InfiniteScrollC";
 
@@ -62,27 +60,13 @@ const DropDown = ({
                   }}
                   cursor="pointer"
                 >
-                  {"add employee +"}
+                  <Badge ml="1" colorScheme="green">
+                    Add new employee +
+                  </Badge>
                 </Text>
               </div>
 
-              <div>
-                {company?.map((employee) => {
-                  return (
-                    <Text
-                      key={employee.id}
-                      fontSize="xl"
-                      onClick={() => {
-                        onClick(employee.nombre!);
-                      }}
-                      cursor="pointer"
-                    >
-                      {" "}
-                      {employee.nombre}
-                    </Text>
-                  );
-                })}
-              </div>
+              <InfiniteScrollC company={company} onClick={onClick} />
             </div>
           ) : null}
         </div>

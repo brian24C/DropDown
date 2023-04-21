@@ -1,7 +1,6 @@
 import {
   Button,
   FormControl,
-  FormHelperText,
   FormLabel,
   Input,
   Modal,
@@ -11,9 +10,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
 } from "@chakra-ui/react";
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { SaveEmployee } from "../lb/controller";
 import { generarIdAleatorio } from "../helps/setId";
 
