@@ -18,9 +18,10 @@ import { generarIdAleatorio } from "../helps/setId";
 interface Props {
   isOpen: boolean;
   setIsOpen: (bo: boolean) => void;
+  setSearch: (valor: string) => void;
 }
 
-const PopUp = ({ isOpen, setIsOpen }: Props) => {
+const PopUp = ({ isOpen, setIsOpen, setSearch }: Props) => {
   const [person, setPerson] = useState({
     codigo: "",
     id: "",
@@ -34,6 +35,7 @@ const PopUp = ({ isOpen, setIsOpen }: Props) => {
     e.preventDefault();
     SaveEmployee({ ...person, id: generarIdAleatorio(8) });
     alert("submitedd");
+    setSearch("");
     setIsOpen(false);
   };
 

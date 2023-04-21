@@ -15,6 +15,7 @@ interface Props {
   ) => void;
   onClick: (name: string) => void;
   onIconClick: (name: string) => void;
+  setSearch: (valor: string) => void;
 }
 
 const DropDown = ({
@@ -23,6 +24,7 @@ const DropDown = ({
   onChange,
   onClick,
   onIconClick,
+  setSearch,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -74,7 +76,9 @@ const DropDown = ({
           ) : null}
         </div>
       </div>
-      {isOpen && <PopUp setIsOpen={setIsOpen} isOpen={isOpen} />}
+      {isOpen && (
+        <PopUp setSearch={setSearch} setIsOpen={setIsOpen} isOpen={isOpen} />
+      )}
     </>
   );
 };

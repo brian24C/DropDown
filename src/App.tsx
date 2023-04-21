@@ -86,6 +86,7 @@ function App() {
               onIconClick={(e) =>
                 handleSearchChange(typesearch.nombre, e, null)
               }
+              setSearch={setSearch}
             />
           </HStack>
 
