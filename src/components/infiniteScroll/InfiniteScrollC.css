@@ -7,6 +7,14 @@
     overflow: auto;
 } 
 
+.infinite-scroll-container-one-result{
+    margin: auto;
+    margin-top: 0em;
+    height: 3.5em;
+    width: 15em;
+    overflow: auto;
+} 
+
 .infinite-scroll-container-table{
     margin: auto;
     margin-top: 1em;

@@ -25,7 +25,14 @@ const InfiniteScrollC = ({ company, onClick }: Props) => {
   }, [paginacion, company]);
 
   return (
-    <div className="infinite-scroll-container" id="infiniteScroll">
+    <div
+      className={
+        company.length < 3
+          ? "infinite-scroll-container-one-result"
+          : "infinite-scroll-container"
+      }
+      id="infiniteScroll"
+    >
       <InfiniteScroll
         dataLength={users.length}
         next={() => {

@@ -16,16 +16,16 @@ function App() {
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    filter(e.target.value);
+    filter(e.target.value, typesearch.nombre);
   };
 
-  const filter = (searchTerm: string) => {
+  const filter = (searchTerm: string, filter: typesearch) => {
     if (searchTerm === "") {
       setUsersfilter(company);
     } else {
       let resultsSearch = company.filter((element) => {
         if (
-          element.nombre
+          element[filter]
             ?.toString()
             .toLowerCase()
             .includes(searchTerm.toLowerCase())
@@ -33,7 +33,7 @@ function App() {
           return element;
         }
       });
-      setUsers(resultsSearch);
+      //setUsers(resultsSearch);
       setUsersfilter(resultsSearch);
     }
   };
@@ -49,7 +49,7 @@ function App() {
         return element;
       }
     });
-    setSearch("");
+    setSearch(searchTerm);
     setUsersfilter(resultsSearch);
   };
 
@@ -75,7 +75,7 @@ function App() {
           <HStack spacing={5} paddingLeft={2} marginBottom={30} padding={5}>
             <DropDown
               search={search}
-              company={users}
+              company={usersfilter}
               onChange={handleSearchChange}
               onClick={(e) => filter_grid(e, typesearch.nombre)}
               onIconClick={(e) => filter_grid(e, typesearch.nombre)}
