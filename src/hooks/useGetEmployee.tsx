@@ -5,14 +5,12 @@ import { useEffect } from "react";
 
 interface Props {
   setCompany: (company: NewEmployeeType[]) => void;
-  setUsers: (users: NewEmployeeType[]) => void;
   setUsersfilter: (usersFilter: NewEmployeeType[]) => void;
   setIsLoading: (loadnig: boolean) => void;
 }
 
 const useGetEmployee = ({
   setCompany,
-  setUsers,
   setUsersfilter,
   setIsLoading,
 }: Props) => {
@@ -22,15 +20,6 @@ const useGetEmployee = ({
         empresa_colecction,
         (snapshot: QuerySnapshot<DocumentData>) => {
           setCompany(
-            snapshot.docs.map((doc) => {
-              return {
-                id: doc.id,
-                ...doc.data(),
-              };
-            })
-          );
-
-          setUsers(
             snapshot.docs.map((doc) => {
               return {
                 id: doc.id,

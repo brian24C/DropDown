@@ -8,15 +8,19 @@ import useGetEmployee from "./hooks/useGetEmployee";
 import InfiniteScrollCtable from "./components/infiniteScroll/InfiniteScrollCtable";
 
 function App() {
-  const [users, setUsers] = useState<NewEmployeeType[]>([]);
+  //const [users, setUsers] = useState<NewEmployeeType[]>([]);
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState<NewEmployeeType[]>([]);
   const [usersfilter, setUsersfilter] = useState<NewEmployeeType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    filter(e.target.value, typesearch.nombre);
+  const handleSearchChange = (
+    filtertype: typesearch,
+    searchTerm: string | null,
+    e: ChangeEvent<HTMLInputElement> | null
+  ) => {
+    setSearch(e?.target.value || searchTerm || "");
+    filter(e?.target.value || searchTerm || "", filtertype);
   };
 
   const filter = (searchTerm: string, filter: typesearch) => {
@@ -25,7 +29,7 @@ function App() {
     } else {
       let resultsSearch = company.filter((element) => {
         if (
-          element[filter]
+          element[filter!]
             ?.toString()
             .toLowerCase()
             .includes(searchTerm.toLowerCase())
@@ -33,27 +37,26 @@ function App() {
           return element;
         }
       });
-      //setUsers(resultsSearch);
       setUsersfilter(resultsSearch);
     }
   };
 
-  const filter_grid = (searchTerm: string, filter: typesearch) => {
-    let resultsSearch = company.filter((element) => {
-      if (
-        element[filter]
-          ?.toString()
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      ) {
-        return element;
-      }
-    });
-    setSearch(searchTerm);
-    setUsersfilter(resultsSearch);
-  };
+  // const filter_grid = (searchTerm: string, filter: typesearch) => {
+  //   let resultsSearch = company.filter((element) => {
+  //     if (
+  //       element[filter]
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(searchTerm.toLowerCase())
+  //     ) {
+  //       return element;
+  //     }
+  //   });
+  //   setSearch(searchTerm);
+  //   setUsersfilter(resultsSearch);
+  // };
 
-  useGetEmployee({ setCompany, setUsers, setUsersfilter, setIsLoading });
+  useGetEmployee({ setCompany, setUsersfilter, setIsLoading });
 
   return (
     <Grid
@@ -76,9 +79,13 @@ function App() {
             <DropDown
               search={search}
               company={usersfilter}
-              onChange={handleSearchChange}
-              onClick={(e) => filter_grid(e, typesearch.nombre)}
-              onIconClick={(e) => filter_grid(e, typesearch.nombre)}
+              onChange={(filtertype, searchTerm, e) =>
+                handleSearchChange(filtertype, searchTerm, e)
+              }
+              onClick={(e) => handleSearchChange(typesearch.nombre, e, null)}
+              onIconClick={(e) =>
+                handleSearchChange(typesearch.nombre, e, null)
+              }
             />
           </HStack>
 
@@ -89,8 +96,6 @@ function App() {
               <div>
                 <InfiniteScrollCtable
                   company={usersfilter}
-                  onClick={(e) => filter_grid(e, typesearch.nombre)}
-                  search={search}
                   isLoading={isLoading}
                 />
               </div>

@@ -16,17 +16,10 @@ import {
 import TableSkeleton from "../TableSkeleton";
 interface Props {
   company: NewEmployeeType[];
-  onClick: (name: string) => void;
-  search: string;
   isLoading: boolean;
 }
 
-const InfiniteScrollCtablePrueba = ({
-  company,
-  onClick,
-  search,
-  isLoading,
-}: Props) => {
+const InfiniteScrollCtablePrueba = ({ company, isLoading }: Props) => {
   const [users, setUsers] = useState<NewEmployeeType[]>([]);
   const [paginacion, setPaginacion] = useState(20);
 

@@ -2,14 +2,17 @@ import { Badge, HStack, Input, Text } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import { IconButton } from "@chakra-ui/react";
 import PopUp from "./PopUp";
-import { NewEmployeeType } from "../types/employee";
+import { NewEmployeeType, typesearch } from "../types/employee";
 import { AiOutlineSearch } from "react-icons/ai";
 import InfiniteScrollC from "./infiniteScroll/InfiniteScrollC";
-
 interface Props {
   company: NewEmployeeType[];
   search: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    filtertype: typesearch,
+    searchTerm: null,
+    e: ChangeEvent<HTMLInputElement>
+  ) => void;
   onClick: (name: string) => void;
   onIconClick: (name: string) => void;
 }
@@ -31,7 +34,7 @@ const DropDown = ({
             placeholder="Buscar por nombre"
             type="text"
             value={search}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => onChange(typesearch.nombre, null, e)}
           />
           <IconButton
             colorScheme="blue"
